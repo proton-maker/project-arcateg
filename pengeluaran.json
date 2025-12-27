@@ -1,0 +1,447 @@
+{
+  "harga_vps_server": [
+    {
+      "paket": "KVM 1",
+      "detail": {
+        "website": "Unlimited Website / Domain",
+        "cpu": "1 Inti vCPU",
+        "ram": "4 GB RAM",
+        "penyimpanan": "50 GB Ruang Disk NVMe",
+        "bandwidth": "4 TB Bandwidth"
+      },
+      "info_performa": "Unlimited website/domain berpengaruh pada resource server",
+      "harga": {
+        "promo_bulanan": 77900,
+        "perpanjangan_bulanan": 143900,
+        "total_tahun_pertama": 934800,
+        "total_tahun_berikutnya": 1726800
+      }
+    },
+    {
+      "paket": "KVM 2",
+      "detail": {
+        "website": "Unlimited Website / Domain",
+        "cpu": "2 Inti vCPU",
+        "ram": "8 GB RAM",
+        "penyimpanan": "100 GB Ruang Disk NVMe",
+        "bandwidth": "8 TB Bandwidth"
+      },
+      "info_performa": "Unlimited website/domain berpengaruh pada resource server",
+      "harga": {
+        "promo_bulanan": 116900,
+        "perpanjangan_bulanan": 193900,
+        "total_tahun_pertama": 1402800,
+        "total_tahun_berikutnya": 2326800
+      }
+    },
+    {
+      "paket": "KVM 4",
+      "detail": {
+        "website": "Unlimited Website / Domain",
+        "cpu": "4 Inti vCPU",
+        "ram": "16 GB RAM",
+        "penyimpanan": "200 GB Ruang Disk NVMe",
+        "bandwidth": "16 TB Bandwidth"
+      },
+      "info_performa": "Unlimited website/domain berpengaruh pada resource server",
+      "harga": {
+        "promo_bulanan": 145900,
+        "perpanjangan_bulanan": 387900,
+        "total_tahun_pertama": 1750800,
+        "total_tahun_berikutnya": 4654800
+      }
+    },
+    {
+      "paket": "KVM 8",
+      "detail": {
+        "website": "Unlimited Website / Domain",
+        "cpu": "8 Inti vCPU",
+        "ram": "32 GB RAM",
+        "penyimpanan": "400 GB Ruang Disk NVMe",
+        "bandwidth": "32 TB Bandwidth"
+      },
+      "info_performa": "Unlimited website/domain berpengaruh pada resource server",
+      "harga": {
+        "promo_bulanan": 290900,
+        "perpanjangan_bulanan": 776900,
+        "total_tahun_pertama": 3490800,
+        "total_tahun_berikutnya": 9322800
+      }
+    }
+  ],
+  "harga_cloud_hosting": [
+    {
+      "paket": "Cloud Startup",
+      "detail": {
+        "website": "100 website / 100 domain",
+        "cpu": "2 CPU core",
+        "ram": "4 GB RAM",
+        "penyimpanan": "100 GB NVMe storage"
+      },
+      "harga": {
+        "promo_bulanan": 155900,
+        "perpanjangan_bulanan": 310900,
+        "total_tahun_pertama": 1870800,
+        "total_tahun_berikutnya": 3730800
+      }
+    },
+    {
+      "paket": "Cloud Professional",
+      "detail": {
+        "website": "100 website / 100 domain",
+        "cpu": "4 CPU core",
+        "ram": "6 GB RAM",
+        "penyimpanan": "200 GB NVMe storage"
+      },
+      "harga": {
+        "promo_bulanan": 252900,
+        "perpanjangan_bulanan": 640900,
+        "total_tahun_pertama": 3034800,
+        "total_tahun_berikutnya": 7690800
+      }
+    },
+    {
+      "paket": "Cloud Enterprise",
+      "detail": {
+        "website": "100 website / 100 domain",
+        "cpu": "6 CPU core",
+        "ram": "12 GB RAM",
+        "penyimpanan": "300 GB NVMe storage"
+      },
+      "harga": {
+        "promo_bulanan": 485900,
+        "perpanjangan_bulanan": 1009900,
+        "total_tahun_pertama": 5830800,
+        "total_tahun_berikutnya": 12118800
+      }
+    }
+  ],
+  "harga_web_hosting": [
+    {
+      "paket": "Single",
+      "detail": {
+        "website": "1 website atau 1 domain",
+        "penyimpanan": "10 GB SSD Storage",
+        "email": "1 Akun Email"
+      },
+      "harga": {
+        "promo_bulanan": 27900,
+        "perpanjangan_bulanan": 54900,
+        "total_tahun_pertama": 334800,
+        "total_tahun_berikutnya": 658800
+      },
+      "analisis_teknis": {
+        "tipe": "WordPress Only / Restricted Hosting",
+        "kelebihan": [
+          "Harga sangat terjangkau",
+          "Setup instan dan mudah untuk pemula",
+          "Didesain khusus untuk performa WordPress"
+        ],
+        "kekurangan": [
+          "Hanya mendukung WordPress (Tidak bisa install Laravel/CodeIgniter)",
+          "Bukan cPanel standar (akses manajemen terbatas)",
+          "Tidak ada akses penuh ke manajemen database",
+          "Tidak fleksibel untuk pengembangan aplikasi web kustom"
+        ],
+        "karakteristik_wordpress": {
+          "ketergantungan_plugin": "Sangat Tinggi. Hampir setiap fitur tambahan (SEO, Form, Caching, Keamanan) membutuhkan instalasi plugin terpisah. Semakin banyak plugin, beban server semakin berat.",
+          "kustomisasi": "Sulit dan Kaku. Kustomisasi logika atau tampilan lanjut sangat sulit dilakukan tanpa merusak core update, kecuali Anda ahli dalam hook/filter WordPress. Berbeda dengan Laravel yang kode-nya anda kendalikan 100%.",
+          "kinerja": "Rawan Bloat. Kode menjadi 'gemuk' dan lambat karena menumpuk plugin yang mungkin tidak efisien.",
+          "fleksibilitas": "Terbatas pada ekosistem Tema & Plugin. Sangat sulit membuat fitur unik (custom business logic) yang kompleks."
+        }
+      }
+    },
+    {
+      "paket": "Premium",
+      "detail": {
+        "website": "3 website atau 3 domain",
+        "penyimpanan": "20 GB SSD Storage",
+        "email": "2 Akun Email"
+      },
+      "harga": {
+        "promo_bulanan": 39900,
+        "perpanjangan_bulanan": 84900,
+        "total_tahun_pertama": 478800,
+        "total_tahun_berikutnya": 1018800
+      },
+      "analisis_teknis": {
+        "tipe": "WordPress Only / Restricted Hosting",
+        "kelebihan": [
+          "Harga terjangkau dengan resource lebih besar dari paket Single",
+          "Mudah digunakan tanpa skill teknis mendalam",
+          "Optimasi server fokus ke WordPress"
+        ],
+        "kekurangan": [
+          "Hanya mendukung WordPress (Tidak bisa install Laravel/CodeIgniter)",
+          "Bukan cPanel standar (akses manajemen terbatas)",
+          "Tidak ada akses penuh ke manajemen database",
+          "Tidak fleksibel untuk pengembangan aplikasi web kustom"
+        ],
+        "karakteristik_wordpress": {
+          "ketergantungan_plugin": "Sangat Tinggi. Hampir setiap fitur tambahan (SEO, Form, Caching, Keamanan) membutuhkan instalasi plugin terpisah. Semakin banyak plugin, beban server semakin berat.",
+          "kustomisasi": "Sulit dan Kaku. Kustomisasi logika atau tampilan lanjut sangat sulit dilakukan tanpa merusak core update, kecuali Anda ahli dalam hook/filter WordPress. Berbeda dengan Laravel yang kode-nya anda kendalikan 100%.",
+          "kinerja": "Rawan Bloat. Kode menjadi 'gemuk' dan lambat karena menumpuk plugin yang mungkin tidak efisien.",
+          "fleksibilitas": "Terbatas pada ekosistem Tema & Plugin. Sangat sulit membuat fitur unik (custom business logic) yang kompleks."
+        }
+      }
+    },
+    {
+      "paket": "Business",
+      "detail": {
+        "website": "50 website atau 50 domain",
+        "penyimpanan": "50 GB NVMe Storage",
+        "email": "5 Akun Email"
+      },
+      "harga": {
+        "promo_bulanan": 59900,
+        "perpanjangan_bulanan": 121900,
+        "total_tahun_pertama": 718800,
+        "total_tahun_berikutnya": 1462800
+      },
+      "analisis_teknis": {
+        "tipe": "WordPress Only / Restricted Hosting",
+        "kelebihan": [
+          "Performa tinggi dengan penyimpanan NVMe",
+          "Resource besar untuk banyak website WordPress",
+          "Manajemen mudah"
+        ],
+        "kekurangan": [
+          "Hanya mendukung WordPress (Tidak bisa install Laravel/CodeIgniter)",
+          "Bukan cPanel standar (akses manajemen terbatas)",
+          "Tidak ada akses penuh ke manajemen database",
+          "Tidak fleksibel untuk pengembangan aplikasi web kustom"
+        ],
+        "karakteristik_wordpress": {
+          "ketergantungan_plugin": "Sangat Tinggi. Hampir setiap fitur tambahan (SEO, Form, Caching, Keamanan) membutuhkan instalasi plugin terpisah. Semakin banyak plugin, beban server semakin berat.",
+          "kustomisasi": "Sulit dan Kaku. Kustomisasi logika atau tampilan lanjut sangat sulit dilakukan tanpa merusak core update, kecuali Anda ahli dalam hook/filter WordPress. Berbeda dengan Laravel yang kode-nya anda kendalikan 100%.",
+          "kinerja": "Rawan Bloat. Kode menjadi 'gemuk' dan lambat karena menumpuk plugin yang mungkin tidak efisien.",
+          "fleksibilitas": "Terbatas pada ekosistem Tema & Plugin. Sangat sulit membuat fitur unik (custom business logic) yang kompleks."
+        }
+      }
+    }
+  ],
+  "harga_cpanel_cloud_hosting": [
+    {
+      "paket": "cPanel Hosting Bisnis",
+      "detail": {
+        "website": "Unlimited Website / Domain",
+        "pengunjung": "Up to 180.000 Pengunjung/Bulan",
+        "cpu_ram": "N/A (Shared Resource)",
+        "penyimpanan": "50 GB SSD Disk Space",
+        "fitur_lain": "Unlimited Bandwidth & Email"
+      },
+      "harga": {
+        "promo_bulanan": 156900,
+        "perpanjangan_bulanan": 156900,
+        "total_tahun_pertama": 1882800,
+        "total_tahun_berikutnya": 1882800
+      },
+      "catatan": "Paket saat ini / Standard cPanel Hosting",
+      "info_performa": "Unlimited website/domain berpengaruh pada performa cPanel/server"
+    },
+    {
+      "paket": "cPanel Cloud Basic",
+      "detail": {
+        "website": "Unlimited Website / Domain",
+        "pengunjung": "Up to 450.000 Pengunjung/Bulan",
+        "cpu_ram": "2 Core CPU / 3 GB RAM",
+        "penyimpanan": "20 GB SSD Disk Space",
+        "fitur_lain": "Dedicated Resources"
+      },
+      "info_performa": "Unlimited website/domain berpengaruh pada performa cPanel/server",
+      "harga": {
+        "promo_bulanan": 125000,
+        "perpanjangan_bulanan": 250000,
+        "total_tahun_pertama": 1500000,
+        "total_tahun_berikutnya": 3000000
+      }
+    },
+    {
+      "paket": "cPanel Cloud Standard",
+      "detail": {
+        "website": "Unlimited Website / Domain",
+        "pengunjung": "Up to 660.000 Pengunjung/Bulan",
+        "cpu_ram": "3 Core CPU / 4 GB RAM",
+        "penyimpanan": "40 GB SSD Disk Space",
+        "fitur_lain": "Dedicated Resources"
+      },
+      "info_performa": "Unlimited website/domain berpengaruh pada performa cPanel/server",
+      "harga": {
+        "promo_bulanan": 192500,
+        "perpanjangan_bulanan": 350000,
+        "total_tahun_pertama": 2310000,
+        "total_tahun_berikutnya": 4200000
+      }
+    },
+    {
+      "paket": "cPanel Cloud Premium",
+      "detail": {
+        "website": "Unlimited Website / Domain",
+        "pengunjung": "Up to 900.000 Pengunjung/Bulan",
+        "cpu_ram": "4 Core CPU / 6 GB RAM",
+        "penyimpanan": "60 GB SSD Disk Space",
+        "fitur_lain": "Dedicated Resources"
+      },
+      "info_performa": "Unlimited website/domain berpengaruh pada performa cPanel/server",
+      "harga": {
+        "promo_bulanan": 249900,
+        "perpanjangan_bulanan": 600000,
+        "total_tahun_pertama": 2998800,
+        "total_tahun_berikutnya": 7200000
+      }
+    },
+    {
+      "paket": "cPanel Cloud Corporate",
+      "detail": {
+        "website": "Unlimited Website / Domain",
+        "pengunjung": "Up to 1.350.000 Pengunjung/Bulan",
+        "cpu_ram": "8 Core CPU / 10 GB RAM",
+        "penyimpanan": "120 GB SSD Disk Space",
+        "fitur_lain": "Dedicated Resources"
+      },
+      "info_performa": "Unlimited website/domain berpengaruh pada performa cPanel/server",
+      "harga": {
+        "promo_bulanan": 660000,
+        "perpanjangan_bulanan": 1200000,
+        "total_tahun_pertama": 7920000,
+        "total_tahun_berikutnya": 14400000
+      }
+    }
+  ],
+  "harga_agency_hosting": [
+    {
+      "paket": "Agency Startup",
+      "detail": {
+        "website": "100 Website",
+        "cpu": "6 CPU core",
+        "ram": "12 GB RAM",
+        "penyimpanan": "300 GB NVMe storage",
+        "inode": "4.000.000 inode"
+      },
+      "harga": {
+        "promo_bulanan": 387900,
+        "perpanjangan_bulanan": 679900,
+        "total_tahun_pertama": 4654800,
+        "total_tahun_berikutnya": 8158800
+      }
+    },
+    {
+      "paket": "Agency Professional",
+      "detail": {
+        "website": "200 Website",
+        "cpu": "8 CPU core",
+        "ram": "20 GB RAM",
+        "penyimpanan": "500 GB NVMe storage",
+        "inode": "6.000.000 inode"
+      },
+      "harga": {
+        "promo_bulanan": 679900,
+        "catatan_perpanjangan": "Harga perpanjangan tidak tercantum (Estimasi ~850rb - 1jt)",
+        "total_tahun_pertama": 8158800
+      }
+    },
+    {
+      "paket": "Agency Growth",
+      "detail": {
+        "website": "300 Website",
+        "cpu": "10 CPU core",
+        "ram": "30 GB RAM",
+        "penyimpanan": "700 GB NVMe storage",
+        "inode": "8.000.000 inode"
+      },
+      "harga": {
+        "promo_bulanan": 1142900,
+        "perpanjangan_bulanan": 1474900,
+        "total_tahun_pertama": 13714800,
+        "total_tahun_berikutnya": 17698800
+      }
+    }
+  ],
+  "harga_domain": [
+    {
+      "ekstensi": ".id",
+      "deskripsi": "Sukseskan bisnis di pasar Indonesia dengan domain .id",
+      "harga": {
+        "tahun_pertama": 210900,
+        "tahun_berikutnya": 252900
+      }
+    },
+    {
+      "ekstensi": ".com",
+      "deskripsi": "Bangun kepercayaan dengan domain terbaik.",
+      "harga": {
+        "tahun_pertama": 109900,
+        "tahun_berikutnya": 209900
+      }
+    },
+    {
+      "ekstensi": ".online",
+      "deskripsi": "Pilihan terbaik selain .com: populer dan universal.",
+      "harga": {
+        "tahun_pertama": 16900,
+        "tahun_berikutnya": 579900
+      }
+    },
+    {
+      "ekstensi": ".io",
+      "deskripsi": "Optimalkan bisnis teknologi dengan domain io.",
+      "harga": {
+        "tahun_pertama": 529900,
+        "tahun_berikutnya": 1126900
+      }
+    },
+    {
+      "ekstensi": ".icu",
+      "deskripsi": "Optimalkan bisnis Anda dengan domain populer.",
+      "harga": {
+        "tahun_pertama": 16900,
+        "tahun_berikutnya": 264900
+      }
+    },
+    {
+      "ekstensi": ".xyz",
+      "deskripsi": "Domain unik & trending untuk kesuksesan bisnis Anda.",
+      "harga": {
+        "tahun_pertama": 32900,
+        "tahun_berikutnya": 231900
+      }
+    },
+    {
+      "ekstensi": ".pro",
+      "deskripsi": "Promosikan keahlian profesional Anda dengan domain pro.",
+      "harga": {
+        "tahun_pertama": 49900,
+        "tahun_berikutnya": 480900
+      }
+    },
+    {
+      "ekstensi": ".cloud",
+      "deskripsi": "Optimalkan bisnis Anda dengan domain populer.",
+      "harga": {
+        "tahun_pertama": 32900,
+        "tahun_berikutnya": 430900
+      }
+    }
+  ],
+  "paket_layanan_arqatech": [
+    {
+      "paket": "PAKET START",
+      "harga": {
+        "nominal": 1000000,
+        "keterangan": "per klien"
+      },
+      "deskripsi": "Cocok untuk UMKM pemula & jasa lokal",
+      "fitur": [
+        "1. Website Company Profile profesional",
+        "2. Maks. 5 halaman",
+        "3. Login admin (kelola konten sendiri)",
+        "4. Gratis domain + hosting 1 tahun",
+        "5. SSL / HTTPS Secure",
+        "6. Free maintenance 1 tahun",
+        "7. Basic Digital Marketing Kickstart (1x / 1 bulan by media ArqaTech)",
+        "   * 1x publikasi di IG / FB ArqaTech",
+        "   * Listing usaha di website ArqaTech"
+      ]
+    }
+  ]
+}

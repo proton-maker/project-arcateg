@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Profitabilitas ArqaTech</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-calculator"></i> Kalkulator Profitabilitas ArqaTech</h1>
+            <p>Analisis keuntungan berdasarkan Paket Layanan (Rp 1.000.000/klien) vs Biaya Server.</p>
+        </header>
+
+        <section class="controls">
+            <div class="control-group">
+                <label for="serverType"><i class="fas fa-server"></i> Pilih Kategori Server/Hosting:</label>
+                <select id="serverType">
+                    <option value="" disabled selected>-- Pilih Kategori --</option>
+                    <!-- Populated by JS -->
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="serverPackage"><i class="fas fa-box"></i> Pilih Paket Spesifik:</label>
+                <select id="serverPackage" disabled>
+                    <option value="" disabled selected>-- Pilih Paket --</option>
+                    <!-- Populated by JS -->
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="clientCount"><i class="fas fa-users"></i> Jumlah Klien Aktif: <span id="clientCountVal">0</span></label>
+                <input type="range" id="clientCount" min="0" max="300" value="0">
+                <div class="quick-inputs">
+                    <button onclick="setClients(10)">10</button>
+                    <button onclick="setClients(50)">50</button>
+                    <button onclick="setClients(100)">100</button>
+                    <button onclick="setClients(300)">300</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="dashboard" class="dashboard hidden">
+            <div class="card-container">
+                <div class="card">
+                    <h3><i class="fas fa-wallet"></i> Pemasukan (Tahunan)</h3>
+                    <p class="value" id="revenueYear">Rp 0</p>
+                    <small>@ Rp 1.000.000 / klien</small>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-file-invoice-dollar"></i> Pengeluaran (Tahunan)</h3>
+                    <p class="value" id="expenseYear">Rp 0</p>
+                    <small>Server + Domain (.com)</small>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-coins"></i> Profit Bersih (Tahunan)</h3>
+                    <p class="value" id="profitYear">Rp 0</p>
+                    <small id="profitStatus">Netral</small>
+                </div>
+            </div>
+
+            <div class="analysis-box">
+                <h4><i class="fas fa-chart-line"></i> Analisis Bisnis</h4>
+                <ul>
+                    <li><strong>Biaya Server:</strong> <span id="serverCostDisplay">-</span> (Renewal Price)</li>
+                    <li><strong>Biaya Domain (Est. .com):</strong> <span id="domainCostDisplay">-</span> / klien</li>
+                    <li><strong>Break Even Point (BEP):</strong> Butuh <span id="bepClients" class="highlight">0</span>
+                        klien untuk balik modal server.</li>
+                    <li><strong>Kapasitas Server:</strong> <span id="serverCapacity">-</span></li>
+                    <li><strong>Status Kapasitas:</strong> <span id="capacityStatus">-</span></li>
+                </ul>
+                <div id="capacityWarning" class="alert hidden"><i class="fas fa-exclamation-triangle"></i> PERINGATAN: Jumlah klien melebihi kapasitas
+                    website/domain paket ini!</div>
+                <div id="resourceWarning" class="alert info hidden"><i class="fas fa-info-circle"></i> Info: <span id="resourceInfoText"></span></div>
+            </div>
+        </section>
+    </div>
+
+    <script src="logic.js"></script>
+</body>
+
+</html>
