@@ -5,6 +5,7 @@ let selectedPackage = null;
 // DOM Elements
 const serverTypeSelect = document.getElementById('serverType');
 const serverPackageSelect = document.getElementById('serverPackage');
+const domainExtensionSelect = document.getElementById('domainExtension');
 const clientCountInput = document.getElementById('clientCount');
 const clientCountVal = document.getElementById('clientCountVal');
 const dashboard = document.getElementById('dashboard');
@@ -24,6 +25,7 @@ async function loadData() {
         }
         globalData = await response.json();
         populateCategories();
+        populateDomains();
     } catch (error) {
         console.error("Gagal memuat data:", error);
         alert("Gagal memuat file pengeluaran.json. Pastikan file ada di folder yang sama.");
@@ -71,6 +73,29 @@ function populatePackages(category) {
     });
 
     serverPackageSelect.disabled = false;
+    serverPackageSelect.disabled = false;
+}
+
+function populateDomains() {
+    const domains = globalData['harga_domain'];
+    // Default to .com if available
+    let defaultIndex = -1;
+    
+    domains.forEach((dom, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        const price = dom.harga.tahun_berikutnya || dom.harga.tahun_pertama;
+        option.textContent = `${dom.ekstensi} (${formatter.format(price)}/thn)`;
+        domainExtensionSelect.appendChild(option);
+        
+        if (dom.ekstensi === '.com') defaultIndex = index;
+    });
+    
+    if (defaultIndex !== -1) {
+        domainExtensionSelect.value = defaultIndex;
+    } else if (domains.length > 0) {
+        domainExtensionSelect.value = 0;
+    }
 }
 
 // Event Listeners
@@ -78,6 +103,10 @@ serverTypeSelect.addEventListener('change', (e) => {
     populatePackages(e.target.value);
     dashboard.classList.add('hidden');
     selectedPackage = null;
+});
+
+domainExtensionSelect.addEventListener('change', () => {
+    if(selectedPackage) calculate();
 });
 
 serverPackageSelect.addEventListener('change', (e) => {
@@ -100,13 +129,16 @@ window.setClients = function (num) {
     if (selectedPackage) calculate();
 }
 
-function getDomainCost() {
-    // Default to .com renewal price from JSON if possible, else hardcode fallback based on known data
-    const domainData = globalData['harga_domain'].find(d => d.ekstensi === '.com');
-    if (domainData && domainData.harga && domainData.harga.tahun_berikutnya) {
-        return domainData.harga.tahun_berikutnya;
-    }
-    return 209900; // Fallback hardcoded
+function getDomainCosts() {
+    const index = domainExtensionSelect.value;
+    if (index === "" || index === null) return { firstYear: 0, renewal: 0 };
+    
+    const domain = globalData['harga_domain'][index];
+    
+    return {
+        firstYear: domain.harga.tahun_pertama || domain.harga.tahun_berikutnya,
+        renewal: domain.harga.tahun_berikutnya || domain.harga.tahun_pertama
+    };
 }
 
 function parseWebsiteLimit(limitString) {
@@ -129,69 +161,107 @@ function calculate() {
     const revenue = clients * REVENUE_PER_CLIENT;
 
     // 2. Expenses
-    // Domain Expense (Per Client) -> Using .com Renewal Price
-    const domainCostPerClient = getDomainCost();
-    const totalDomainCost = clients * domainCostPerClient;
+    const domainStats = getDomainCosts();
+    const totalDomainCost1 = clients * domainStats.firstYear;
+    const totalDomainCost2 = clients * domainStats.renewal;
 
     // Server Expense (Fixed per Server Package)
-    // Use "total_tahun_berikutnya" (Renewal) for conservative estimate, or "perpanjangan_bulanan" * 12
-    let serverYearlyCost = 0;
-    if (selectedPackage.harga.total_tahun_berikutnya) {
-        serverYearlyCost = selectedPackage.harga.total_tahun_berikutnya;
-    } else if (selectedPackage.harga.perpanjangan_bulanan) {
-        // If yearly total not explicitly listed, calc from monthly
-        serverYearlyCost = selectedPackage.harga.perpanjangan_bulanan * 12;
-    } else if (selectedPackage.harga.total_tahun_pertama) {
-        // Fallback to first year if renewal missing (warn user?)
-        serverYearlyCost = selectedPackage.harga.total_tahun_pertama;
+    let serverCost1 = 0;
+    let serverCost2 = 0;
+    
+    // Year 1 (Promo)
+    if (selectedPackage.harga.total_tahun_pertama) {
+        serverCost1 = selectedPackage.harga.total_tahun_pertama;
+    } else if (selectedPackage.harga.promo_bulanan) {
+        serverCost1 = selectedPackage.harga.promo_bulanan * 12;
+    } else {
+        // Fallback
+        serverCost1 = selectedPackage.harga.total_tahun_berikutnya || (selectedPackage.harga.perpanjangan_bulanan * 12);
     }
+    
+    // Year 2+ (Renewal)
+    if (selectedPackage.harga.total_tahun_berikutnya) {
+        serverCost2 = selectedPackage.harga.total_tahun_berikutnya;
+    } else if (selectedPackage.harga.perpanjangan_bulanan) {
+        serverCost2 = selectedPackage.harga.perpanjangan_bulanan * 12;
+    } else if (selectedPackage.harga.catatan_perpanjangan) { 
+        // Heuristic for known text like "Estimasi ~850rb - 1jt"
+        // Let's take a safe upper bound estimate if exact number missing?
+        // Or just fallback to Year 1 * 1.5? 
+        // For Agency Professional user said ~850rb-1jt per month -> ~12jt year?
+        // Let's reuse promo price if 0 but warn? 
+        // Current JSON for Agency Professional has total_tahun_berikutnya: 0. 
+        // We shouldn't leave it 0.
+        // Let's use Year 1 price if Year 2 is missing/zero, to be safe.
+        serverCost2 = serverCost1; 
+    } else {
+        serverCost2 = serverCost1;
+    }
+    
+    // If specific packages have explicit 0 but text note, we might want to handle it.
+    // But for now, ensuring non-zero server cost is critical.
+    if(serverCost2 === 0 && serverCost1 > 0) serverCost2 = serverCost1;
 
-    const totalExpense = serverYearlyCost + totalDomainCost;
+    const totalExpense1 = serverCost1 + totalDomainCost1;
+    const totalExpense2 = serverCost2 + totalDomainCost2;
 
     // 3. Profit
-    const netProfit = revenue - totalExpense;
+    const profit1 = revenue - totalExpense1;
+    const profit2 = revenue - totalExpense2;
 
     // 4. Break Even Point
-    // Revenue * X = ServerCost + (DomainCost * X)
-    // (Revenue - DomainCost) * X = ServerCost
-    // X = ServerCost / (Revenue - DomainCost)
-    const profitPerClient = REVENUE_PER_CLIENT - domainCostPerClient;
-    const bepClients = Math.ceil(serverYearlyCost / profitPerClient);
+    const profitPerClient1 = REVENUE_PER_CLIENT - domainStats.firstYear;
+    const bep1 = profitPerClient1 > 0 ? Math.ceil(serverCost1 / profitPerClient1) : "Inf";
+    
+    const profitPerClient2 = REVENUE_PER_CLIENT - domainStats.renewal;
+    const bep2 = profitPerClient2 > 0 ? Math.ceil(serverCost2 / profitPerClient2) : "Inf";
 
     // 5. Capacity Check
-    const limitString = selectedPackage.detail.website || "1 Website"; // Default fallback
+    const limitString = selectedPackage.detail.website || "1 Website"; 
     const maxWebsites = parseWebsiteLimit(limitString);
 
-    updateUI(revenue, totalExpense, netProfit, serverYearlyCost, domainCostPerClient, bepClients, maxWebsites, clients);
+    updateUI(revenue, totalExpense1, totalExpense2, profit1, profit2, serverCost1, serverCost2, domainStats, bep1, bep2, maxWebsites, clients);
 }
 
-function updateUI(revenue, expense, profit, serverCost, domainCost, bep, maxWebsites, currentClients) {
+function updateUI(revenue, expense1, expense2, profit1, profit2, serverCost1, serverCost2, domainStats, bep1, bep2, maxWebsites, currentClients) {
     // Cards
     document.getElementById('revenueYear').textContent = formatter.format(revenue);
-    document.getElementById('expenseYear').textContent = formatter.format(expense);
+    
+    document.getElementById('expenseYear1').textContent = formatter.format(expense1);
+    document.getElementById('expenseYear2').textContent = formatter.format(expense2);
 
-    const profitEl = document.getElementById('profitYear');
-    const profitStatus = document.getElementById('profitStatus');
-    profitEl.textContent = formatter.format(profit);
-
-    if (profit > 0) {
-        profitEl.className = "value text-success";
-        profitStatus.innerHTML = 'PROFITABLE (Untung) <i class="fas fa-rocket"></i>';
-        profitStatus.className = "text-success";
-    } else if (profit < 0) {
-        profitEl.className = "value text-danger";
-        profitStatus.innerHTML = 'UNPROFITABLE (Rugi) <i class="fas fa-arrow-trend-down"></i>';
-        profitStatus.className = "text-danger";
-    } else {
-        profitEl.className = "value";
-        profitStatus.innerHTML = 'Balik Modal (Netral) <i class="fas fa-balance-scale"></i>';
-        profitStatus.className = "";
-    }
+    const updateProfitStatus = (elVal, elStatus, amount) => {
+        elVal.textContent = formatter.format(amount);
+        if (amount > 0) {
+            elVal.className = "value-small text-success";
+            elStatus.innerHTML = '<i class="fas fa-rocket"></i> Untung';
+            elStatus.className = "text-success";
+        } else if (amount < 0) {
+            elVal.className = "value-small text-danger";
+            elStatus.innerHTML = '<i class="fas fa-arrow-trend-down"></i> Rugi';
+            elStatus.className = "text-danger";
+        } else {
+            elVal.className = "value-small";
+            elStatus.innerHTML = '<i class="fas fa-balance-scale"></i> Netral';
+            elStatus.className = "";
+        }
+    };
+    
+    updateProfitStatus(document.getElementById('profitYear1'), document.getElementById('profitStatus1'), profit1);
+    updateProfitStatus(document.getElementById('profitYear2'), document.getElementById('profitStatus2'), profit2);
 
     // Analysis
-    document.getElementById('serverCostDisplay').textContent = formatter.format(serverCost) + " / tahun";
-    document.getElementById('domainCostDisplay').textContent = formatter.format(domainCost);
-    document.getElementById('bepClients').textContent = bep;
+    document.getElementById('serverCost1').textContent = formatter.format(serverCost1);
+    document.getElementById('serverCost2').textContent = formatter.format(serverCost2);
+    
+    const selectedDomainIdx = domainExtensionSelect.value;
+    const domainName = globalData['harga_domain'][selectedDomainIdx].ekstensi;
+    
+    document.getElementById('domainCost1').textContent = formatter.format(domainStats.firstYear);
+    document.getElementById('domainCost2').textContent = formatter.format(domainStats.renewal);
+    
+    document.getElementById('bep1').textContent = bep1;
+    document.getElementById('bep2').textContent = bep2;
 
     const serverCapacityEl = document.getElementById('serverCapacity');
     serverCapacityEl.textContent = (maxWebsites === Infinity) ? "Unlimited" : `${maxWebsites} Website`;
@@ -205,10 +275,6 @@ function updateUI(revenue, expense, profit, serverCost, domainCost, bep, maxWebs
             capacityStatusEl.className = "text-danger";
             capacityWarning.classList.remove('hidden');
             capacityWarning.innerHTML = `<i class="fas fa-exclamation-triangle"></i> PERINGATAN: Paket ini hanya mendukung maksimal ${maxWebsites} website. Anda perlu ${Math.ceil(currentClients/maxWebsites)} paket ini untuk ${currentClients} klien.`;
-
-            // Adjust calculation for multiple server packages?
-            // User requested simplified logic first, but let's hint at it. 
-            // For now, let's keep the math simple (1 server) but show big warning.
         } else {
             capacityStatusEl.className = "text-success";
             capacityWarning.classList.add('hidden');
@@ -218,12 +284,37 @@ function updateUI(revenue, expense, profit, serverCost, domainCost, bep, maxWebs
         capacityWarning.classList.add('hidden');
     }
 
-    // Resource Warning (Info Performa)
+    // Resource Warning (Info Performa) & Technical Analysis
     const resourceWarning = document.getElementById('resourceWarning');
     const resourceInfoText = document.getElementById('resourceInfoText');
+    
+    let warningText = "";
+    
+    // Check for standard performance info
     if (selectedPackage.info_performa) {
+        warningText += `<strong>Info Performa:</strong> ${selectedPackage.info_performa}<br>`;
+    }
+    
+    // Check for Technical Analysis (WordPress Only)
+    if (selectedPackage.analisis_teknis) {
+        const tech = selectedPackage.analisis_teknis;
+        if (tech.tipe && tech.tipe.includes("WordPress")) {
+            warningText += `<br><strong>⚠️ RESTRIKSI PLATFORM (${tech.tipe}):</strong><br>`;
+            warningText += `<ul style="margin: 5px 0; padding-left: 20px; list-style-type: square;">`;
+            
+            if (tech.kekurangan) {
+                tech.kekurangan.forEach(k => warningText += `<li>${k}</li>`);
+            }
+            if (tech.karakteristik_wordpress && tech.karakteristik_wordpress.kustomisasi) {
+                 warningText += `<li>${tech.karakteristik_wordpress.kustomisasi}</li>`;
+            }
+            warningText += `</ul>`;
+        }
+    }
+
+    if (warningText) {
         resourceWarning.classList.remove('hidden');
-        resourceInfoText.textContent = selectedPackage.info_performa;
+        resourceInfoText.innerHTML = warningText;
     } else {
         resourceWarning.classList.add('hidden');
     }

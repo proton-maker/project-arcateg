@@ -1,3 +1,46 @@
+/* Append to style.css */
+.dual-value {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.dual-value > div {
+    flex: 1;
+}
+
+.separator {
+    width: 1px;
+    height: 40px;
+    background-color: var(--border);
+    flex: 0 0 1px !important;
+}
+
+.label-tiny {
+    font-size: 0.75em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.value-small {
+    font-size: 1.3em;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text);
+}
+
+
+/* Existing styles below... just ensuring they exist or appending */
+/* Assuming I should overwrite or append. Let's append by reading file first? 
+   Actually, the tool replaces or overwrites. I should probably re-output the whole file or use replacement.
+   Since I have the full content from previous turns, I will re-output the full file with these additions to be safe 
+   and maintain the previous quality.
+*/
+
 :root {
     --primary: #3b82f6;
     --primary-hover: #2563eb;
@@ -53,6 +96,7 @@ h1 {
     background: linear-gradient(to right, #60a5fa, #a78bfa);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text; /* Standard property */
 }
 
 p { 
@@ -108,6 +152,7 @@ select:focus, input:focus {
 /* Range Input Styling */
 input[type=range] {
     -webkit-appearance: none;
+    appearance: none; /* Standard property */
     background: transparent;
     padding: 0;
     height: 30px;
@@ -207,6 +252,40 @@ input[type=range]::-webkit-slider-thumb:hover {
     font-size: 0.9em;
 }
 
+.dual-value {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.dual-value > div {
+    flex: 1;
+}
+
+.separator {
+    width: 1px;
+    height: 40px;
+    background-color: var(--border);
+    flex: 0 0 1px !important;
+}
+
+.label-tiny {
+    font-size: 0.75em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.value-small {
+    font-size: 1.25em; /* Slightly smaller than main value */
+    font-weight: 700;
+    margin: 0;
+    color: var(--text);
+}
+
 .analysis-box {
     background: rgba(59, 130, 246, 0.05);
     border-radius: 12px;
@@ -230,9 +309,9 @@ input[type=range]::-webkit-slider-thumb:hover {
     margin-bottom: 12px;
     border-bottom: 1px dashed var(--border);
     padding-bottom: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    /* display: flex;  Removed flex to allow multiline BEP */
+    /* justify-content: space-between; */
+    /* align-items: center; */
 }
 
 .analysis-box li:last-child {
@@ -242,6 +321,7 @@ input[type=range]::-webkit-slider-thumb:hover {
 .analysis-box li strong {
     color: var(--text-muted);
     font-weight: 500;
+    margin-right: 10px;
 }
 
 .highlight {

@@ -37,6 +37,14 @@
             </div>
 
             <div class="control-group">
+                <label for="domainExtension"><i class="fas fa-globe"></i> Pilih Ekstensi Domain:</label>
+                <select id="domainExtension">
+                    <option value="" disabled selected>-- Pilih Ekstensi --</option>
+                    <!-- Populated by JS -->
+                </select>
+            </div>
+
+            <div class="control-group">
                 <label for="clientCount"><i class="fas fa-users"></i> Jumlah Klien Aktif: <span id="clientCountVal">0</span></label>
                 <input type="range" id="clientCount" min="0" max="300" value="0">
                 <div class="quick-inputs">
@@ -57,23 +65,60 @@
                 </div>
                 <div class="card">
                     <h3><i class="fas fa-file-invoice-dollar"></i> Pengeluaran (Tahunan)</h3>
-                    <p class="value" id="expenseYear">Rp 0</p>
-                    <small>Server + Domain (.com)</small>
+                    <div class="dual-value">
+                        <div>
+                            <span class="label-tiny">Tahun 1 (Promo)</span>
+                            <p class="value-small" id="expenseYear1">Rp 0</p>
+                        </div>
+                        <div class="separator"></div>
+                        <div>
+                            <span class="label-tiny">Tahun 2+ (Normal)</span>
+                            <p class="value-small" id="expenseYear2">Rp 0</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="card">
                     <h3><i class="fas fa-coins"></i> Profit Bersih (Tahunan)</h3>
-                    <p class="value" id="profitYear">Rp 0</p>
-                    <small id="profitStatus">Netral</small>
+                     <div class="dual-value">
+                        <div>
+                            <span class="label-tiny">Tahun 1</span>
+                            <p class="value-small" id="profitYear1">Rp 0</p>
+                            <small id="profitStatus1">-</small>
+                        </div>
+                         <div class="separator"></div>
+                        <div>
+                            <span class="label-tiny">Tahun 2+</span>
+                            <p class="value-small" id="profitYear2">Rp 0</p>
+                            <small id="profitStatus2">-</small>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="analysis-box">
-                <h4><i class="fas fa-chart-line"></i> Analisis Bisnis</h4>
+                <h4><i class="fas fa-chart-line"></i> Analisis Bisnis Detil</h4>
                 <ul>
-                    <li><strong>Biaya Server:</strong> <span id="serverCostDisplay">-</span> (Renewal Price)</li>
-                    <li><strong>Biaya Domain (Est. .com):</strong> <span id="domainCostDisplay">-</span> / klien</li>
-                    <li><strong>Break Even Point (BEP):</strong> Butuh <span id="bepClients" class="highlight">0</span>
-                        klien untuk balik modal server.</li>
+                    <li>
+                        <strong>Biaya Server:</strong> 
+                        <span>
+                            <span id="serverCost1">-</span> (Thn 1) ⮕ 
+                            <span id="serverCost2">-</span> (Thn 2+)
+                        </span>
+                    </li>
+                    <li>
+                        <strong>Biaya Domain:</strong> 
+                        <span>
+                            <span id="domainCost1">-</span> (Thn 1) ⮕ 
+                            <span id="domainCost2">-</span> (Thn 2+)
+                        </span>
+                    </li>
+                    <li>
+                        <strong>Break Even Point (BEP):</strong> 
+                        <br>
+                        • Tahun 1: Butuh <span id="bep1" class="highlight">0</span> klien.
+                        <br>
+                        • Tahun 2+: Butuh <span id="bep2" class="highlight">0</span> klien.
+                    </li>
                     <li><strong>Kapasitas Server:</strong> <span id="serverCapacity">-</span></li>
                     <li><strong>Status Kapasitas:</strong> <span id="capacityStatus">-</span></li>
                 </ul>
